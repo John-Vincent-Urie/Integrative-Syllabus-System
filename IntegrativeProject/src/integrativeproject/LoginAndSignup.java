@@ -8,6 +8,9 @@ public class LoginAndSignup {
         Login LoginFrame = new Login(); 
         LoginFrame.setVisible(true);
         LoginFrame.setLocationRelativeTo(null);
-    }
+//Client LoginFrame = new Client(); 
+//        LoginFrame.setVisible(true);
+//        LoginFrame.setLocationRelativeTo(null);
+//    }
     
-}
+    }}

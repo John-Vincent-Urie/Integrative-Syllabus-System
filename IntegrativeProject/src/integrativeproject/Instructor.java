@@ -32,8 +32,10 @@ public class Instructor extends javax.swing.JFrame {
     
     private void loadSavedTabs() {
     try (Connection conn = DBConnection.connectDB();
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT tab_name FROM tabbed")) {
+         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tabbed WHERE user_id = ?")) {
+
+        stmt.setInt(1, get.data);
+        ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
             String tabName = rs.getString("tab_name");
@@ -70,7 +72,7 @@ public class Instructor extends javax.swing.JFrame {
         String sql = "SELECT c.school_year, c.semester, c.course_code, c.course_title " +
                      "FROM courses c " +
                      "JOIN tabbed t ON c.tab_id = t.tab_id " +
-                     "WHERE t.tab_name = ? AND user_id = ?" ;
+                     "WHERE t.tab_name = ? AND t.user_id = ?" ;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, tabName);
             stmt.setInt(2, get.data);
@@ -664,8 +666,9 @@ public class Instructor extends javax.swing.JFrame {
 
     // Save tab name to DB
     try (Connection conn = DBConnection.connectDB();
-         PreparedStatement pstmt = conn.prepareStatement("INSERT INTO tabbed (tab_name) VALUES (?)")) {
+         PreparedStatement pstmt = conn.prepareStatement("INSERT INTO tabbed (tab_name, user_id) VALUES (?, ?)")) {
         pstmt.setString(1, name);
+        pstmt.setInt(2, get.data);
         pstmt.executeUpdate();
         
         this.dispose();  

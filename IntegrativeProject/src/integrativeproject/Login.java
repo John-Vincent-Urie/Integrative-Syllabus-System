@@ -33,7 +33,7 @@ public class Login extends javax.swing.JFrame {
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
+        username = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         passwordo = new javax.swing.JPasswordField();
         bt_login = new javax.swing.JButton();
@@ -225,12 +225,12 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("LOGIN");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setText("Email");
+        jLabel2.setText("Username");
 
-        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        email.addActionListener(new java.awt.event.ActionListener() {
+        username.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailActionPerformed(evt);
+                usernameActionPerformed(evt);
             }
         });
 
@@ -275,7 +275,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
-                        .addComponent(email)
+                        .addComponent(username)
                         .addComponent(jLabel3)
                         .addComponent(passwordo, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
                     .addComponent(bt_login, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -293,7 +293,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
@@ -328,32 +328,29 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
+    }//GEN-LAST:event_usernameActionPerformed
 
     private void passwordoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordoActionPerformed
 
     private void bt_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_loginActionPerformed
-        String Email = email.getText();
+        String user = username.getText();
         String Password = new String(passwordo.getPassword());
         
-        if(Email.isEmpty() || Password.isEmpty()){
+        if(user.isEmpty() || Password.isEmpty()){
             JOptionPane.showMessageDialog(this, "Username or Password should no empty", "Error", JOptionPane.ERROR_MESSAGE);
         }
         try (Connection conn = DBConnection.connectDB();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM authentication WHERE email = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM authentication WHERE username = ?")) {
             
-            stmt.setString(1, Email);
+            stmt.setString(1, user);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 data = rs.getInt("user_id");
-                
-                
-                
                 String storedPassword = rs.getString("password_hash");
                 if (Password.equals(storedPassword)) {  // Secure: Implement hashing for real usage
                     JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -392,7 +389,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel Left;
     private javax.swing.JPanel Right;
     private javax.swing.JButton bt_login;
-    private javax.swing.JTextField email;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -402,8 +398,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -411,11 +405,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField passwordo;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
